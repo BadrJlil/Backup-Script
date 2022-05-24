@@ -44,21 +44,6 @@ goto :eof
 ftp -n -i 192.168.1.20 < "FTP Config.cfg" >> "Archives\%archive%.log"
 goto :eof
 
-:check_upload
-findstr /C:"%Archive%" isituploaded.txt > NUL
-if ERRORLEVEL 1 (
-    time /t >> "Archives\%archive%.log"
-    echo Couldn't find the file in the server >> "Archives\%archive%.log"
-    del isituploaded.txt
-    goto :end
-    ) else (
-        time /t >> "Archives\%archive%.log"
-    echo Files uploaded successfully >> "Archives\%archive%.log"
-    echo. >> "Archives\%archive%.log"
-    del isituploaded.txt
-    goto :eof
-)
-
 :archiving
 rename "Archives\%archive%.zip" "%archive%.old"
 time /t >> "Archives\%archive%.log"
@@ -85,8 +70,6 @@ echo Checking connection again...
 call :check_connection
 echo Uploading the files...
 call :upload
-echo Checking uploaded files...
-call :check_upload
 echo Archiving old files...
 call :archiving
 echo Done
