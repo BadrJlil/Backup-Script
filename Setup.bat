@@ -11,6 +11,8 @@ echo File "Test" created inside that folder
 call "Setup\Add FTP to Firewall.bat"
 echo FTP added to firewall
 
+timeout 5
+
 call "Backup Script.bat"
 echo Backup tested
 
