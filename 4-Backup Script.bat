@@ -1,4 +1,5 @@
 @echo off
+cd "c:\Backup-Server"
 echo Starting Backup, Don't close this window
 
 goto :main
@@ -74,7 +75,6 @@ call :upload
 echo Archiving old files...
 call :archiving
 echo Done
-pause
 goto :eof
 
 :end
@@ -86,5 +86,4 @@ if  exist "Archives\%archive%.zip"  (
     echo. >> "Archives\%archive%.log"
     )
 echo Operation Abandoned >> "Archives\%archive%.log"
-pause
 exit
