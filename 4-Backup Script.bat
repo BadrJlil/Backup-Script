@@ -1,11 +1,12 @@
+@echo off
 echo Starting Backup, Don't close this window
 
 goto :main
 
 :check_connection
-ping 192.168.1.20 -n 1 | FIND "TTL=" >NUL
+ping 172.16.1.11 -n 1 | FIND "TTL=" >NUL
 if not ERRORLEVEL 1 goto :eof  else (
-ping 192.168.1.20 -w 3000 | FIND "TTL=" >NUL
+ping 172.16.1.11 -w 3000 | FIND "TTL=" >NUL
 if ERRORLEVEL 1 goto :offline else goto :eof )
 
 :connected
@@ -41,7 +42,7 @@ echo. >> "Archives\%archive%.log"
 goto :eof
 
 :upload
-ftp -n -i 192.168.1.20 < "FTP Config.cfg" >> "Archives\%archive%.log"
+ftp -n -i 172.16.1.11 < "FTP Config.cfg" >> "Archives\%archive%.log"
 goto :eof
 
 :archiving
@@ -73,7 +74,7 @@ call :upload
 echo Archiving old files...
 call :archiving
 echo Done
-echo %DD% %TT%   upload complete >> "upload logs.log"
+pause
 goto :eof
 
 :end
@@ -85,5 +86,5 @@ if  exist "Archives\%archive%.zip"  (
     echo. >> "Archives\%archive%.log"
     )
 echo Operation Abandoned >> "Archives\%archive%.log"
-echo %DD% %TT%   upload failed >> "upload logs.log"
+pause
 exit
